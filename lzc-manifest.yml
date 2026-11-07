@@ -1,0 +1,39 @@
+application:
+  subdomain: flipt
+  multi_instance: false
+  # flipt has no built-in user accounts / login by default (authentication is
+  # optional and disabled), so it must NOT be exposed via public_path; the
+  # platform login gate stays the only access control.
+  upstreams:
+    - location: /package-licenses/
+      backend: file:///lzcapp/pkg/content/licenses/
+    - location: /
+      backend: http://flipt:8080/
+services:
+  flipt:
+    # upstream: flipt/flipt:v2.14.1 (gRPC 9000 not exposed; UI/API only)
+    image: docker.1ms.run/flipt/flipt:v2.14.1
+    environment:
+      - TZ=Asia/Shanghai
+    binds:
+      # official docs: persist $HOME/flipt -> /var/opt/flipt
+      - /lzcapp/var/data:/var/opt/flipt
+usage: |
+  flipt 是一个开源特性开关（feature flag）与实验管理平台：在 Web UI 里创建
+  flag、控制放量比例、写评估规则，应用侧通过 HTTP/gRPC SDK 读取开关状态。
+
+  使用方法：
+  1. 打开应用即可使用（上游默认无账号体系，UI 与 API 均开箱即用）。
+  2. 在 Flags 页面创建你的第一个特性开关，配置变体与规则。
+  3. 应用侧用 REST API（/api/v1）或 gRPC SDK 评估开关；详情见官方文档
+     https://docs.flipt.io 。
+
+  数据与安全：
+  - 本应用上游默认没有用户账号与登录页，因此本包不对外开放未登录访问
+    （保持平台入口鉴权），不建议自行加 public_path。
+  - 数据保存在 /lzcapp/var/data（SQLite），卸载应用会一并删除，请定期备份。
+  - 许可为 FCL-1.0-MIT（Fair Core，未来转 MIT）：允许非商业目的使用与再分发，
+    正文见 /package-licenses/ 。
+
+  说明：
+  - 本包未做实机验证，功能以官方文档为准，遇到问题请反馈。

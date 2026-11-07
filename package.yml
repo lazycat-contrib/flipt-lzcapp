@@ -1,0 +1,18 @@
+package: community.lazycat.app.flipt
+name: flipt
+version: 2.14.1
+description: "Feature flag / experiment management: create flags, toggle rollouts, evaluate rules via UI and API."
+min_os_version: "1.5.0"
+homepage: https://github.com/flipt-io/flipt
+author: flipt-io
+license: FCL-1.0-MIT
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: Flipt 特性开关
+    description: "特性开关与实验管理平台：创建 flag、控制放量、通过 UI 或 API 评估规则。"
+  en:
+    name: Flipt
+    description: "Open-source feature flag & experiment management with UI and evaluation API."
