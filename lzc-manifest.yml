@@ -11,7 +11,7 @@ application:
       backend: http://flipt:8080/
 services:
   flipt:
-    # upstream: flipt/flipt:v2.14.1 (gRPC 9000 not exposed; UI/API only)
+    # upstream: flipt/flipt:v2.14.1
     image: docker.1ms.run/flipt/flipt:v2.14.1
     environment:
       - TZ=Asia/Shanghai
